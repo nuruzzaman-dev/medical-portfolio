@@ -84,35 +84,123 @@ const services: Service[] = [
   },
 ];
 
-const education = [
-  {
-    period: "2015 — 2018",
-    title: "Fellowship in Cardiology",
-    place: "St. Catherine Medical Center",
-    detail: "Advanced training in preventative and interventional cardiology.",
-  },
-  {
-    period: "2011 — 2015",
-    title: "Doctor of Medicine",
-    place: "Northbridge University School of Medicine",
-    detail: "Graduated with distinction in clinical medicine and research.",
-  },
-];
+type ResumeTab = "Education" | "Experience" | "Skills" | "Awards";
 
-const experience = [
-  {
-    period: "2019 — Present",
-    title: "Consultant Cardiologist",
-    place: "Havenwell Private Clinic",
-    detail: "Leading a patient-first practice focused on long-term heart health.",
-  },
-  {
-    period: "2018 — 2019",
-    title: "Clinical Cardiologist",
-    place: "St. Catherine Medical Center",
-    detail: "Managed complex cases across diagnosis, treatment, and recovery.",
-  },
-];
+type ResumeItem = {
+  period: string;
+  title: string;
+  place: string;
+  detail: string;
+};
+
+const resumeTabs: ResumeTab[] = ["Education", "Experience", "Skills", "Awards"];
+
+const resumeContent: Record<ResumeTab, ResumeItem[]> = {
+  Education: [
+    {
+      period: "2015 — 2018",
+      title: "Fellowship in Cardiology",
+      place: "St. Catherine Medical Center",
+      detail: "Advanced training in preventative and interventional cardiology.",
+    },
+    {
+      period: "2011 — 2015",
+      title: "Doctor of Medicine",
+      place: "Northbridge University School of Medicine",
+      detail: "Graduated with distinction in clinical medicine and research.",
+    },
+    {
+      period: "2008 — 2011",
+      title: "Bachelor of Medical Science",
+      place: "Northbridge University",
+      detail: "Built a foundation in human biology, diagnostics, and patient care.",
+    },
+    {
+      period: "2006 — 2008",
+      title: "Clinical Sciences Diploma",
+      place: "Westlake College",
+      detail: "Completed early clinical rotations across medicine and surgery.",
+    },
+  ],
+  Experience: [
+    {
+      period: "2019 — Present",
+      title: "Consultant Cardiologist",
+      place: "Havenwell Private Clinic",
+      detail: "Leading a patient-first practice focused on long-term heart health.",
+    },
+    {
+      period: "2018 — 2019",
+      title: "Clinical Cardiologist",
+      place: "St. Catherine Medical Center",
+      detail: "Managed complex cases across diagnosis, treatment, and recovery.",
+    },
+    {
+      period: "2015 — 2018",
+      title: "Cardiology Fellow",
+      place: "St. Catherine Medical Center",
+      detail: "Supported multidisciplinary teams through diagnosis and intervention.",
+    },
+    {
+      period: "2012 — 2015",
+      title: "Resident Physician",
+      place: "Northbridge General Hospital",
+      detail: "Delivered attentive care across acute and outpatient services.",
+    },
+  ],
+  Skills: [
+    {
+      period: "01 / 04",
+      title: "Preventative Cardiology",
+      place: "Advanced clinical focus",
+      detail: "Personalized risk assessment, lifestyle planning, and long-term heart health strategies.",
+    },
+    {
+      period: "02 / 04",
+      title: "Interventional Care",
+      place: "Advanced clinical focus",
+      detail: "Clear treatment plans that connect modern diagnostics with confident decision-making.",
+    },
+    {
+      period: "03 / 04",
+      title: "Patient Communication",
+      place: "Care philosophy",
+      detail: "Complex information translated into calm, plain-language conversations.",
+    },
+    {
+      period: "04 / 04",
+      title: "Care Coordination",
+      place: "Care philosophy",
+      detail: "Thoughtful collaboration with families, specialists, and primary care teams.",
+    },
+  ],
+  Awards: [
+    {
+      period: "2024",
+      title: "Patient Care Excellence Award",
+      place: "Havenwell Private Clinic",
+      detail: "Recognized for thoughtful communication and continuity of care.",
+    },
+    {
+      period: "2022",
+      title: "Clinical Research Distinction",
+      place: "Northbridge Medical Society",
+      detail: "Honored for contributions to preventative cardiology research.",
+    },
+    {
+      period: "2020",
+      title: "Rising Physician Award",
+      place: "St. Catherine Medical Center",
+      detail: "Awarded for leadership in multidisciplinary cardiac care.",
+    },
+    {
+      period: "2018",
+      title: "Graduation with Distinction",
+      place: "Northbridge University School of Medicine",
+      detail: "Completed medical training with distinction in clinical medicine.",
+    },
+  ],
+};
 
 const galleryTiles = [
   {
@@ -185,6 +273,7 @@ function AppLink({ children, href }: { children: ReactNode; href: string }) {
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [activeResumeTab, setActiveResumeTab] = useState<ResumeTab>("Education");
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -405,22 +494,36 @@ export default function Home() {
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
               <SectionHeading eyebrow="My professional path" title="Experience that stays curious." copy="Training, practice, and ongoing learning come together in the way I care for every patient." />
-              <div className="flex gap-2 border-b border-[#dceaf2] pb-0 text-[0.62rem] font-bold uppercase tracking-[0.16em]">
-                <button type="button" className="border-b-2 border-[#087dd1] px-3 pb-3 text-[#087dd1]">Education</button>
-                <button type="button" className="px-3 pb-3 text-[#9aaab6] transition hover:text-[#087dd1]">Experience</button>
-                <button type="button" className="hidden px-3 pb-3 text-[#9aaab6] transition hover:text-[#087dd1] sm:block">Skills</button>
-                <button type="button" className="hidden px-3 pb-3 text-[#9aaab6] transition hover:text-[#087dd1] sm:block">Awards</button>
+              <div role="tablist" aria-label="Résumé categories" className="flex flex-wrap gap-x-2 border-b border-[#dceaf2] pb-0 text-[0.62rem] font-bold uppercase tracking-[0.16em]">
+                {resumeTabs.map((tab) => {
+                  const isActive = activeResumeTab === tab;
+                  return (
+                    <button
+                      key={tab}
+                      type="button"
+                      role="tab"
+                      id={`resume-tab-${tab.toLowerCase()}`}
+                      aria-selected={isActive}
+                      aria-controls="resume-panel"
+                      onClick={() => setActiveResumeTab(tab)}
+                      className={`relative px-3 pb-3 pt-1 transition-colors duration-200 ${isActive ? "text-[#087dd1]" : "text-[#9aaab6] hover:text-[#087dd1]"}`}
+                    >
+                      {tab}
+                      <span className={`absolute inset-x-3 bottom-[-1px] h-0.5 origin-center bg-[#087dd1] transition-transform duration-200 ${isActive ? "scale-x-100" : "scale-x-0"}`} />
+                    </button>
+                  );
+                })}
               </div>
             </div>
-            <div className="mt-14 grid gap-x-16 gap-y-10 lg:grid-cols-2">
-              {[...education, ...experience].map((item, index) => (
-                <div key={`${item.title}-${item.period}`} className="relative border-l-2 border-[#087dd1] pl-7">
+            <div id="resume-panel" role="tabpanel" aria-labelledby={`resume-tab-${activeResumeTab.toLowerCase()}`} aria-live="polite" className="mt-14 grid gap-x-16 gap-y-10 lg:grid-cols-2">
+              {resumeContent[activeResumeTab].map((item, index) => (
+                <div key={`${activeResumeTab}-${item.title}-${item.period}`} className="relative border-l-2 border-[#087dd1] pl-7">
                   <span className="absolute -left-[0.47rem] top-0 flex size-3.5 items-center justify-center rounded-full border-2 border-white bg-[#087dd1] ring-1 ring-[#087dd1]" />
                   <p className="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[#087dd1]">{item.period}</p>
                   <h3 className="mt-3 font-display text-2xl font-semibold text-[#183348]">{item.title}</h3>
                   <p className="mt-1 text-xs font-bold text-[#50687a]">{item.place}</p>
                   <p className="mt-3 max-w-md text-xs leading-6 text-[#7a8d9b]">{item.detail}</p>
-                  <span className="absolute right-0 top-0 text-[0.6rem] font-bold text-[#c7e8f8]">0{(index % 4) + 1}</span>
+                  <span className="absolute right-0 top-0 text-[0.6rem] font-bold text-[#c7e8f8]">0{index + 1}</span>
                 </div>
               ))}
             </div>
