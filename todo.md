@@ -1,7 +1,7 @@
-# Résumé Tabs Refinement
+# Mobile Responsiveness Refinement
 
-- [x] Inspect the current résumé section and map each tab to its content model.
-- [x] Add interactive Education, Experience, Skills, and Awards state and content.
-- [x] Match active-tab styling and preserve the reference timeline/card layout.
-- [x] Verify keyboard interaction, mobile wrapping, and the production build.
-- [x] Save a checkpoint and deliver the refinement.
+- [x] Audit the current layout at narrow mobile widths and locate overflow or cramped sections.
+- [x] Refine mobile-only hero, gallery, résumé tabs/timeline, and appointment spacing without changing desktop classes.
+- [x] Verify mobile navigation, tab interaction, form usability, and no horizontal overflow.
+- [x] Confirm the desktop layout remains visually unchanged.
+- [x] Save a checkpoint and deliver the responsiveness fix.

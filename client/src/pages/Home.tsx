@@ -356,7 +356,7 @@ export default function Home() {
       <main>
         <section className="relative px-4 pb-6 pt-4 sm:px-6 lg:px-8 lg:pt-8">
           <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[2rem] shadow-[0_25px_80px_rgba(54,104,140,0.16)] lg:min-h-[41rem] lg:grid-cols-[0.92fr_1.08fr]">
-            <div className="relative flex min-h-[35rem] flex-col justify-center overflow-hidden bg-[#8bc6ec] px-7 pb-12 pt-28 sm:px-12 lg:min-h-0 lg:px-16 lg:pb-20 lg:pt-28">
+            <div className="relative flex min-h-[35rem] flex-col justify-center overflow-hidden bg-[#8bc6ec] px-7 pb-24 pt-28 sm:px-12 lg:min-h-0 lg:px-16 lg:pb-20 lg:pt-28">
               <div className="absolute -left-10 top-16 grid grid-cols-5 gap-5 opacity-70" aria-hidden="true">
                 {Array.from({ length: 25 }).map((_, index) => (
                   <span key={index} className="size-2 rounded-full bg-white/80" />
@@ -435,7 +435,7 @@ export default function Home() {
             <div className="hidden h-14 w-px bg-[#a8d5ee] lg:block" />
             <div className="rounded-2xl bg-[#087dd1] p-5 text-white shadow-[0_14px_30px_rgba(8,125,209,0.18)]">
               <div className="flex items-center gap-2 text-[0.63rem] font-bold uppercase tracking-[0.18em] text-white/80"><Clock3 className="size-3.5" /> Time for you</div>
-              <div className="mt-4 grid grid-cols-2 gap-4 text-[0.65rem] leading-5 text-white/90">
+              <div className="mt-4 grid grid-cols-2 gap-4 text-[0.65rem] leading-5 text-white/90 max-[400px]:grid-cols-1">
                 <div><p className="font-bold text-white">Monday — Friday</p><p>9:00 am — 4:30 pm</p></div>
                 <div><p className="font-bold text-white">Saturday</p><p>10:00 am — 2:00 pm</p></div>
               </div>
@@ -494,7 +494,7 @@ export default function Home() {
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
               <SectionHeading eyebrow="My professional path" title="Experience that stays curious." copy="Training, practice, and ongoing learning come together in the way I care for every patient." />
-              <div role="tablist" aria-label="Résumé categories" className="flex flex-wrap gap-x-2 border-b border-[#dceaf2] pb-0 text-[0.62rem] font-bold uppercase tracking-[0.16em]">
+              <div role="tablist" aria-label="Résumé categories" className="flex flex-wrap gap-x-2 border-b border-[#dceaf2] pb-0 text-[0.62rem] font-bold uppercase tracking-[0.16em] max-sm:grid max-sm:grid-cols-4 max-sm:gap-x-0">
                 {resumeTabs.map((tab) => {
                   const isActive = activeResumeTab === tab;
                   return (
@@ -506,10 +506,10 @@ export default function Home() {
                       aria-selected={isActive}
                       aria-controls="resume-panel"
                       onClick={() => setActiveResumeTab(tab)}
-                      className={`relative px-3 pb-3 pt-1 transition-colors duration-200 ${isActive ? "text-[#087dd1]" : "text-[#9aaab6] hover:text-[#087dd1]"}`}
+                      className={`relative px-3 pb-3 pt-1 transition-colors duration-200 max-sm:px-1 max-sm:text-[0.55rem] max-sm:tracking-[0.08em] ${isActive ? "text-[#087dd1]" : "text-[#9aaab6] hover:text-[#087dd1]"}`}
                     >
                       {tab}
-                      <span className={`absolute inset-x-3 bottom-[-1px] h-0.5 origin-center bg-[#087dd1] transition-transform duration-200 ${isActive ? "scale-x-100" : "scale-x-0"}`} />
+                      <span className={`absolute inset-x-3 bottom-[-1px] h-0.5 origin-center bg-[#087dd1] transition-transform duration-200 max-sm:inset-x-1 ${isActive ? "scale-x-100" : "scale-x-0"}`} />
                     </button>
                   );
                 })}
